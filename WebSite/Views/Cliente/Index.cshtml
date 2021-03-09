@@ -1,0 +1,134 @@
+﻿@model IEnumerable<WebSite.Models.Cliente>
+
+@{
+    ViewBag.Title = "Gerenciamento de Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" href="@Url.Content("~/Content/DataTables/css/dataTables.bootstrap.min.css")" />
+}
+
+<div class="container-fluid main-content">
+    <div style="margin-bottom:5px; font-weight:bold;">
+        <button type="button" class="btn btn-primary btn-novo" data-toggle="modal" data-target="#modal-add-upd">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Adicionar Cliente
+        </button>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            Clientes
+        </div>
+        <div class="panel-body table-responsive">
+            <table class="table table-striped table-hover" style="width:100% !important">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.ClienteId)</th>
+                        <th>@Html.DisplayNameFor(model => model.NomeCliente)</th>
+                        <th>@Html.DisplayNameFor(model => model.TipoCliente)</th>
+                        <th>@Html.DisplayNameFor(model => model.NomeContato)</th>
+                        <th>@Html.DisplayNameFor(model => model.TelefoneContato)</th>
+                        <th>@Html.DisplayNameFor(model => model.Cidade)</th>
+                        <th>@Html.DisplayNameFor(model => model.Bairro)</th>
+                        <th>@Html.DisplayNameFor(model => model.Logradouro)</th>
+                        <th>@Html.DisplayNameFor(model => model.DataCadastro)</th>
+                        <th>@Html.DisplayNameFor(model => model.DataAtualizacao)</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-add-upd" tabindex="-1" role="dialog" aria-labelledby="AddUpdateModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary" style="border-top-left-radius: 4px; border-top-right-radius: 4px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="AddUpdateModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="frm-add-upd">
+                    <input type="hidden" id="ClienteId" name="ClienteId" value="0" />
+                    <div class="form-group">
+                        <label for="NomeCliente" class="control-label">Nome:</label>
+                        <input type="text" class="form-control" id="NomeCliente" name="NomeCliente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="TipoCliente" class="control-label">Tipo Cliente:</label>
+                        <input type="text" class="form-control" id="TipoCliente" name="TipoCliente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="NomeContato" class="control-label">Nome Contato:</label>
+                        <input type="text" class="form-control" id="NomeContato" name="NomeContato" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="TelefoneContato" class="control-label">Telefone Contato:</label>
+                        <input type="text" class="form-control" id="TelefoneContato" name="TelefoneContato" maxlength="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Cidade" class="control-label">Cidade:</label>
+                        <input type="text" class="form-control" id="Cidade" name="Cidade" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Bairro" class="control-label">Bairro:</label>
+                        <input type="text" class="form-control" id="Bairro" name="Bairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Logradouro" class="control-label">Logradouro:</label>
+                        <input type="text" class="form-control" id="Logradouro" name="Logradouro" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success action-save">Salvar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-excluir" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary" style="border-top-left-radius: 4px; border-top-right-radius: 4px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Excluir</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja excluir o Cliente?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-danger action-delete" data-id="">Sim</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="modal-error" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary" style="border-top-left-radius: 4px; border-top-right-radius: 4px;" >
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Erro</h4>
+            </div>
+            <div class="modal-body text-danger">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section ScriptPage {
+    <script src="@Url.Content("~/scripts/DataTables/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("~/scripts/DataTables/dataTables.bootstrap.js")"></script>
+    <script src="@Url.Content("~/scripts/Cliente/cliente.js")"></script>
+}

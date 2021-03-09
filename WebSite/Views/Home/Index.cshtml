@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Gerenciamento de Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid main-content">
+    <div class="jumbotron">
+        <h1>Gerenciamento de Clientes</h1>
+        <p style="padding-left:8px;"><small class="text-muted"> Cadastro, Consulta, Edição e Exclusão </small></p>
+    </div>
+</div>
+
+@section ScriptPage {
+    <script>
+        (function () {
+            $('ul.nav.navbar-nav li').removeClass('active');
+            $('#nav-home').addClass('active');
+        })();
+    </script>
+}
